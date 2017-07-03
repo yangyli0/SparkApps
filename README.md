@@ -4,6 +4,7 @@
 - hadoop-2.6.2
 - spark-1.5.2-bin-hadoop2.6
 - scala-2.10.5
+- sbt
 ####  基于Spark streaming的 模拟 网站日志实时分析系统
 1. 基本描述:
 - 日志来源:用Python脚本随机生成Nginx访问日志，并通过Bash脚本上传至HDFS
@@ -16,7 +17,7 @@
   + 终端类型(PC, ios, Android)PV
 
 2. 使用：
-- 项目根目录下:<code>mvn clean package</code>
+- 项目根目录下:<code>sbt clean package</code>
 - 启动hadoop hdfs
 - 根据自身Spark和Hadoop配置情况，修改log_analysis.sh
 - 项目根目录下，打开两个终端窗口，分别运行
