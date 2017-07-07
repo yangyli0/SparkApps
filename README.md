@@ -32,7 +32,7 @@
 <code>pip3 install flask flask-socketio kafka-python</code>
 
 1. 基本描述:
-- <code>KafkaProducer</code>动态从<code>./data/user_log.csv</code>[来源](https://pan.baidu.com/s/1cs02Nc).
+- <code>KafkaProducer</code>动态从<code>pykafka/data/user_log.csv</code>[来源](https://pan.baidu.com/s/1cs02Nc).
 文件动态处理消费记录，发送消费记录中的性别代号(0或１)到Kafka. 主题为'gender'
 - Spark Streaming从Kafka主题'gender'读取处理消息,时间窗口为7秒
 - Spark Streaming将处理后的数据发送给Kafka，主题为'result'
