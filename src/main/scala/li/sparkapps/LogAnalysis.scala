@@ -6,15 +6,15 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 /**
   * Created by lee on 7/3/17.
   */
-object LogAnalysisSc {
+object LogAnalysis {
   def main(args: Array[String]): Unit = {
     if (args.length != 1) {
       println("please specify the hdrf URI");
       System.exit(1);
     }
-    /* 设定计算周期, 每10s产生的日志文件作为一个批次 */
-    val batch = 10
-    val conf = new SparkConf().setAppName("WebLogAnalysis").setMaster("local[4]")
+    /* 设定计算周期, 每30s产生的日志文件作为一个批次 */
+    val batch = 30
+    val conf = new SparkConf().setAppName("WebLogAnalysis").setMaster("local[1]")
     val ssc = new StreamingContext(conf, Seconds(batch))
 
     /* 创建输入DStream */
@@ -27,9 +27,19 @@ object LogAnalysisSc {
 
     // 2.各IP的PV, 按PV倒序, 第一个字段是ip
 
+    /*
     lines.map(line => {(line.split(" ")(0), 1)}).reduceByKey(_ + _).transform(rdd =>
     {rdd.map(ip_pv => (ip_pv._2, ip_pv._1)).sortByKey(false)
       .map(ip_pv => (ip_pv._2, ip_pv._1))}).print()
+    */
+
+    lines.map(line => {(line.split(" ")(0), 1)})
+            .reduceByKey(_ + _)
+              .transform(rdd => {
+                rdd.map(ip_pv => (ip_pv._2, ip_pv._1))
+                  .sortByKey(false)
+                  .map(ip_pv =>  (ip_pv._2, ip_pv._1))  // 要把顺序重新调整回来
+              }).print()
 
     // 3.搜索引擎pv
     val refer = lines.map(_.split("\"")(3))

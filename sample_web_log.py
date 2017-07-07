@@ -32,9 +32,9 @@ class WebLogGeneration():
         ]
 
         self.http_refer = [
-            "http://baidu.com/s?wd={query}",
-            "http://google.com/search?q={query}",
-            "http://sougou.com/web?query={query}",
+            "http://www.baidu.com/s?wd={query}",
+            "http://www.google.com/search?q={query}",
+            "http://www.sougou.com/web?query={query}",
             "http://www.yahoo.com/s?p={query}",
             "http://cn.bing.com/search?q={query}"
         ]
@@ -55,7 +55,7 @@ class WebLogGeneration():
 
 
     def sample_refer(self):
-        if (random.uniform(0, 1) > 0.2):  # 只有20%的流量有refer
+        if (random.uniform(0, 1) > 0.8):  # 只有20%的流量有refer,
             return "-"
         refer_str = random.sample(self.http_refer, 1)
         query_str = random.sample(self.search_keyword, 1)
