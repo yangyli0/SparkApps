@@ -1,5 +1,5 @@
 ## Spark应用程序（陆续更新）
-###  基于Spark streaming的 模拟 网站日志实时分析系统
+###  一. 基于Spark streaming的 模拟 网站日志实时分析系统
 #### 来源:《Spark最佳实践》原书只有Scala实现，这里增加了Java实现，并修正了几处小错误
 #### 环境依赖
 - hadoop-2.6.2
@@ -24,7 +24,7 @@
   + <code>./create_log.sh</code>
   + <code>./log_analysis.sh</code>
 
-## Kafka + Spark Streaming实现男女淘宝购物数量动态展示DashBoard
+## 二. Kafka + Spark Streaming实现男女淘宝购物数量动态展示DashBoard
 #### 环境依赖
 在上面基础上增加:
 - spark-streaming-kafka_2.10
@@ -51,6 +51,8 @@
 - 项目主目录 <code>cd pykafka</code>, <code>python app.py</code>
 - 访问 localhost:5000
 
+3. 效果
+<img src="out.gif">
 
   
 
