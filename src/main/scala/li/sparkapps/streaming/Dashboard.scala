@@ -1,12 +1,13 @@
-package li.sparkapps
+package li.sparkapps.streaming
 
 import java.util.HashMap
+
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
-import org.json4s._
-import org.json4s.jackson.Serialization.write
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka._
+import org.json4s._
+import org.json4s.jackson.Serialization.write
 
 object Dashboard {
   implicit val formats = DefaultFormats//数据格式化时需要

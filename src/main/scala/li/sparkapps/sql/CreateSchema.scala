@@ -1,10 +1,8 @@
-package li.sparkapps
+package li.sparkapps.sql
 
-
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.{Row, SQLContext}
+import org.apache.spark.sql.types.{StringType, StructField, StructType}
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.Row
-import org.apache.spark.sql.types.{StructType, StructField, StringType}
 
 /**
   * Created by lee on 7/6/17.

@@ -1,4 +1,4 @@
-package li.sparkapps;
+package li.sparkapps.streaming;
 
 import org.apache.spark.*;
 import org.apache.spark.api.java.function.*;

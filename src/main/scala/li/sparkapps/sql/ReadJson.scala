@@ -1,7 +1,7 @@
-package li.sparkapps
+package li.sparkapps.sql
 
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by lee on 7/5/17.
