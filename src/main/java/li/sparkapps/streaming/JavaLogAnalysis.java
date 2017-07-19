@@ -48,8 +48,8 @@ public class JavaLogAnalysis {
         PairFunction<Tuple2<Integer, String>, String, Integer> reverseBack = item -> item.swap();
         JavaPairDStream<String, Integer> transformPairs = reducePairs.transformToPair(
                 pairRDD -> pairRDD.mapToPair(reverse)
-                .sortByKey()
-                .mapToPair(reverseBack)
+                        .sortByKey()
+                        .mapToPair(reverseBack)
         );
         transformPairs.print();
 
@@ -95,13 +95,13 @@ public class JavaLogAnalysis {
         // 终端类型PV
         JavaDStream<String> devices =  lines.map(str -> str.split("\"")[5]);
         JavaPairDStream<String, Integer> devicesPair = devices.mapToPair(agent -> {
-           String[] facilities = {"iPhone", "Android"};
-           String de = "Default";
-           for (String str : facilities) {
-               if (agent.indexOf(str) != -1)
-                   return new Tuple2<>(str, 1);
-           }
-           return new Tuple2<>(de, 1);
+            String[] facilities = {"iPhone", "Android"};
+            String de = "Default";
+            for (String str : facilities) {
+                if (agent.indexOf(str) != -1)
+                    return new Tuple2<>(str, 1);
+            }
+            return new Tuple2<>(de, 1);
         });
 
         devicesPair.reduceByKey(((v1, v2) -> v1+v2)).print();

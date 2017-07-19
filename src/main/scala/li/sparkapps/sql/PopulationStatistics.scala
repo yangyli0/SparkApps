@@ -57,7 +57,7 @@ object PopulationStatistics {
 
     // 女性身高最大值
     populationDF.filter(populationDF("gender").equalTo("F")).agg(Map("height" -> "max")).show()
-    
+
   }
 
 }
