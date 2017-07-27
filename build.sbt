@@ -23,6 +23,7 @@ libraryDependencies += "org.apache.spark" % "spark-graphx_2.10" % "1.5.2"
 libraryDependencies += "org.apache.spark" % "spark-sql_2.10" % "1.5.2"
 libraryDependencies += "org.apache.spark" % "spark-streaming-kafka_2.10" % "1.5.2"
 libraryDependencies += "org.json4s" %% "json4s-jackson" % "3.2.11"
+libraryDependencies += "com.google.code.gson" % "gson" % "2.3.1"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard

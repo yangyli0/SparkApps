@@ -8,6 +8,7 @@ import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka._
 import org.json4s._
 import org.json4s.jackson.Serialization.write
+import com.google.gson.Gson
 
 object Dashboard {
   implicit val formats = DefaultFormats//数据格式化时需要
@@ -26,13 +27,27 @@ object Dashboard {
     val Array(zkQuorum, group, topics, numThreads) = args
     val sparkConf = new SparkConf().setAppName("KafkaWordCount").setMaster("local[4]")
     val ssc = new StreamingContext(sparkConf, Seconds(1))
-    ssc.checkpoint(".")
-    // 将topics转换成topic-->numThreads的哈稀表
-    val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
+    ssc.checkpoint(".") // 设置checkpoint directory
+    // 将topics转换成(topic,numThreads)的map
+    //val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
+
+    val f = (x: String) => new Tuple2[String, Int](x, numThreads.toInt)
+    val topicMap = topics.split(",").map(f).toMap
+
+
     // 创建连接Kafka的消费者链接
+
     val lines = KafkaUtils.createStream(ssc, zkQuorum, group, topicMap).map(_._2)
     val words = lines.flatMap(_.split(" "))//将输入的每行用空格分割成一个个word
     // 对每一秒的输入数据进行reduce，然后将reduce后的数据发送给Kafka
+
+
+   // words.print() // 调试用
+
+    //val wordX = words.map(x => (x, 1L)).print() // 调试用
+
+    //words.map( x => (x, 1L)).reduceByKeyAndWindow(_+_, _-_, Seconds(1), Seconds(1), 1).print()  // debug
+
     val wordCounts = words.map(x => (x, 1L))
       .reduceByKeyAndWindow(_+_,_-_, Seconds(1), Seconds(1), 1).foreachRDD(rdd => {
       if(rdd.count !=0 ){
@@ -45,6 +60,9 @@ object Dashboard {
         // 实例化一个Kafka生产者
         val producer = new KafkaProducer[String, String](props)
         // rdd.colect即将rdd中数据转化为数组，然后write函数将rdd内容转化为json格式
+
+
+
         val str = write(rdd.collect)
         // 封装成Kafka消息，topic为"result"
         val message = new ProducerRecord[String, String]("result", null, str)
