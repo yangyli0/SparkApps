@@ -46,7 +46,7 @@ public class JavaDashboard {
         final Pattern SPACE = Pattern.compile(" ");
         SparkConf conf = new SparkConf().setAppName("Dashboard").setMaster("local[4]");
         JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
-        jssc.checkpoint(".");
+        jssc.checkpoint("./checkpoint");
         Map<String, Integer> topicMap = new HashMap<>();
         for (String topic: topics.split(",")) {
             topicMap.put(topic, numThreads);
@@ -87,11 +87,13 @@ public class JavaDashboard {
                 new Duration(1000), new Duration(1000), 1, new Function<Tuple2<String, Integer>, Boolean>() {
                     @Override
                     public Boolean call(Tuple2<String, Integer> v1) throws Exception {
-                        return true;
+                       if (v1._1().equals("1") || v1._1().equals("0"))
+                            return true;
+                        return false;
                     }
                 });
 
-        //reducedPairs.print();   // debug
+        reducedPairs.print();   // debug
 
         reducedPairs.foreachRDD(new Function<JavaPairRDD<String, Integer>, Void>() {
             @Override

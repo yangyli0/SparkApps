@@ -26,7 +26,7 @@
 
 ## 二. Kafka + Spark Streaming实现男女淘宝购物数量动态展示DashBoard ([来源](http://dblab.xmu.edu.cn/blog/1528/))
 #### 说明
-1. 出处只有<code>scala</code>实现，这里添加了<code>Java</code>实现
+1. 出处只有<code>scala</code>实现，这里添加了<code>Java</code>实现，对流中无效数据项进行过滤。
 2. <code>scala</code>实现采用了<code>json4</code>作为序列化方式,在<code>java</code>中用<code>json4</code>遇到了问题，自己实现的了序列化方案。
 #### 环境依赖
 在上面基础上增加:
@@ -54,7 +54,7 @@
 - 项目主目录 <code>cd pykafka</code>, <code>python app.py</code>
 - 访问 localhost:5000
 
-3. 效果
+3. 结果
 <img src="out.gif">
 
   

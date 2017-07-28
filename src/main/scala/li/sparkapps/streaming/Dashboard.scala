@@ -27,7 +27,7 @@ object Dashboard {
     val Array(zkQuorum, group, topics, numThreads) = args
     val sparkConf = new SparkConf().setAppName("KafkaWordCount").setMaster("local[4]")
     val ssc = new StreamingContext(sparkConf, Seconds(1))
-    ssc.checkpoint(".") // 设置checkpoint directory
+    ssc.checkpoint("./checkpoint") // 设置checkpoint directory
     // 将topics转换成(topic,numThreads)的map
     //val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
 
@@ -48,6 +48,8 @@ object Dashboard {
 
     //words.map( x => (x, 1L)).reduceByKeyAndWindow(_+_, _-_, Seconds(1), Seconds(1), 1).print()  // debug
 
+    // 过滤掉无意义项，只保留男女
+    //val filterFunc = (tuple: Tuple2[String, Long]) => {tuple._1.equals("1") || tuple._1.equals("0")}
     val wordCounts = words.map(x => (x, 1L))
       .reduceByKeyAndWindow(_+_,_-_, Seconds(1), Seconds(1), 1).foreachRDD(rdd => {
       if(rdd.count !=0 ){
