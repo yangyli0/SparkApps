@@ -48,8 +48,7 @@ object Dashboard {
 
     //words.map( x => (x, 1L)).reduceByKeyAndWindow(_+_, _-_, Seconds(1), Seconds(1), 1).print()  // debug
 
-    // 过滤掉无意义项，只保留男女
-    //val filterFunc = (tuple: Tuple2[String, Long]) => {tuple._1.equals("1") || tuple._1.equals("0")}
+
     val wordCounts = words.map(x => (x, 1L))
       .reduceByKeyAndWindow(_+_,_-_, Seconds(1), Seconds(1), 1).foreachRDD(rdd => {
       if(rdd.count !=0 ){

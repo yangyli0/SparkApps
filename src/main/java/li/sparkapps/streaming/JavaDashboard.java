@@ -93,7 +93,7 @@ public class JavaDashboard {
                     }
                 });
 
-        reducedPairs.print();   // debug
+       // reducedPairs.print();   // debug
 
         reducedPairs.foreachRDD(new Function<JavaPairRDD<String, Integer>, Void>() {
             @Override
